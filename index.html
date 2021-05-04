@@ -9,6 +9,7 @@
       crossorigin="anonymous"
     ></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mustache@4.2.0/mustache.min.js"></script>
     <link
       href="https://fonts.googleapis.com/css?family=Roboto&display=swap"
       rel="stylesheet"
@@ -28,27 +29,82 @@
   </head>
   <body>
     <header class="header">
-      <h1>Whats the Weather?</h1>
+      <h1 class="text-center">Whats the Weather?</h1>
     </header>
 
     <div class="container-fluid">
       <div class="row">
-        <div class="col-4">
-          <h2>City Search</h2>
+        <div class="col-3">
           <div>
-            <input type="text" class="searchInput" />
-            <button type="submit" class="searchBtn">
-              <i class="fas fa-search"></i>
-            </button>
+            <form id="weather-search-form">
+              <div class="form-group">
+                <label for="#weather-search-field">City Search</label>
+                <input
+                  type="text"
+                  id="weather-search-field"
+                  class="searchInput form-control"
+                  placeholder="Ex: San Diego"
+                />
+              </div>
+              <button type="submit" class="searchBtn btn btn-block btn-primary">
+                <i class="fas fa-search"></i> Search
+              </button>
+            </form>
           </div>
+          <hr />
+          <div id="searchhistory"></div>
         </div>
-        <div class="col-8">
+
+        <div class="col-9">
           <div class="row">
-            <div class="col-12">Right side</div>
+            <div class="col-12">
+              <div class="card">
+                <div class="card-body" id="current-weather"></div>
+              </div>
+            </div>
+          </div>
+          <br />
+          <div class="row">
+            <div class="col-12" id="five-day-forecast"></div>
           </div>
         </div>
       </div>
     </div>
+    <br />
+    <br />
+    <script type="x-tmpl-mustache" id="current-weather-template">
+      <h3 class="card-title">{{city}}</h3>
+      <p>Weather Icon Here <span>{{weathericon}}<span></p>
+      <p>Temp: <span>{{temperature}}</span></p>
+      <p>Wind: <span>{{wind}}</span></p>
+      <p>Humidity: <span>{{humidity}}</span></p>
+      <p>UV Index: <span class="badge badge-{{uvColor}}">{{uvIndex}}</span></p>
+    </script>
+    <script type="x-tmpl-mustache" id="five-day-forecast-template">
+      <h3>5 Day Forecast</h3>
+      <div class="row row-cols-5">
+        {{#days}}
+        <div class="col">
+          <div class="card">
+            <div class="card-body bg-dark text-white">
+              <h5 class="card-title">
+                {{date}}
+              </h5>
+              <p>Weather Icon Here <span>{{weathericon}}<span></p>
+              <p>Temp: <span>{{temperature}}</span></p>
+              <p>
+                Wind: <span>{{wind}}</span>
+              </p>
+              <p>
+                Humidity:
+                <span>{{humidity}}</span>
+              </p>
+            </div>
+          </div>
+        </div>
+        {{/days}}
+      </div>
+    </script>
+    <script src="/Weather-App/assets/script.js"></script>
   </body>
-  <script src="/Weather-App/assets/script.js"></script>
 </html>
